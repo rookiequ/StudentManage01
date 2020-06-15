@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yctu.student.dao.StudentDAO">
+    <resultMap id="studentDO" type="com.yctu.student.domain.StudentDO">
+        <id column="id" property="id" jdbcType="BIGINT"></id>
+        <result column="number" property="number"></result>
+        <result column="password" property="password"></result>
+        <result column="name" property="name"></result>
+        <result column="sex" property="sex"></result>
+        <result column="major" property="major"></result>
+        <result column="classroom" property="classroom"></result>
+        <result column="college" property="college"></result>
+        <result column="phone" property="phone"></result>
+        <result column="birthday" property="birthday"></result>
+        <result column="entry_time" property="entryTime"></result>
+        <result column="create_time" property="createTime"></result>
+        <result column="modify_time" property="modifyTime"></result>
+    </resultMap>
+    <insert id="addStudent" parameterType="com.yctu.student.domain.StudentDO">
+        <selectKey keyProperty="id" order="AFTER" resultType="long">
+            SELECT
+            LAST_INSERT_ID()
+        </selectKey>
+        INSERT INTO tb_student(
+          number,
+          password,
+          name,
+          sex,
+          major,
+          classroom,
+          college,
+          phone,
+          birthday,
+          entry_time,
+          create_time,
+          modify_time
+          )VALUES(
+          #{number},
+          #{password},
+          #{name},
+          #{sex},
+          #{major},
+          #{classroom},
+          #{college},
+          #{phone},
+          #{birthday},
+          #{entryTime},
+          NOW(),
+          NOW()
+          )
+    </insert>
+    <update id="updateStudent" parameterType="com.yctu.student.domain.StudentDO">
+        UPDATE tb_student
+        SET
+          number=#{number},
+          password=#{password},
+          name=#{name},
+          sex=#{sex},
+          major=#{major},
+          classroom=#{classroom},
+          college=#{college},
+          phone=#{phone},
+          birthday=#{birthday}
+          entry_time=#{entryTime}
+          modify_time=NOW()
+        WHERE id=#{id}
+    </update>
+    <delete id="deleteStudentById" parameterType="java.lang.Long">
+        DELETE FROM tb_student
+        WHERE id=#{id}
+    </delete>
+
+    <select id="getAllStudent" resultMap="studentDO">
+        select * from tb_student
+    </select>
+    <select id="getStudentById" parameterType="java.lang.Long" resultMap="studentDO">
+        select * from tb_student
+        where id=#{id}
+    </select>
+    <select id="getStudentByNumber" parameterType="java.lang.String" resultMap="studentDO">
+        select * from tb_student
+        where number=#{number}
+    </select>
+    <select id="getStudentsByCollege" parameterType="java.lang.String" resultMap="studentDO">
+        select * from tb_student
+        where college=#{college}
+    </select>
+    <select id="getStudentsByEntryTime" parameterType="java.time.LocalDateTime" resultMap="studentDO">
+        select * from tb_student
+        where entry_time=#{entryTime}
+    </select>
+    <select id="getStudentsBySex" parameterType="java.lang.String" resultMap="studentDO">
+        select * from tb_student
+        where sex=#{sex}
+    </select>
+    <select id="getStudentsByName" parameterType="java.lang.String" resultMap="studentDO">
+        select * from tb_student
+        where name=#{name}
+    </select>
+    <select id="searchStudents" resultType="com.yctu.student.domain.StudentDO">
+
+    </select>
+</mapper>

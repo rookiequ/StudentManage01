@@ -1,9 +1,12 @@
 package com.yctu.student.dao;
 
 import com.yctu.student.domain.StudentDO;
+import org.apache.ibatis.annotations.Select;
+import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
 import java.util.List;
+
 
 public interface StudentDAO {
 
